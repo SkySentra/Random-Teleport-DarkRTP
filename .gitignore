@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+
+# Build wrapper is committed; downloaded distributions are not
+gradle/wrapper/dists/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+bin/
+out/
+
+# OS
+.DS_Store
+Thumbs.db

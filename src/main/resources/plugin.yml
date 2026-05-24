@@ -1,0 +1,34 @@
+name: DarkRTP
+version: '${version}'
+main: com.darkrtp.DarkRtp
+api-version: '1.21'
+description: Fully configurable random teleport (RTP / wild) plugin for Paper 1.21.x.
+authors: [DarkIntel]
+website: https://github.com/
+
+commands:
+  darkrtp:
+    description: Randomly teleport to a safe location.
+    usage: |
+      /<command>            - randomly teleport yourself
+      /<command> <player>   - teleport another player
+      /<command> reload     - reload the configuration
+      /<command> help       - show command help
+    aliases: [rtp, wild]
+
+permissions:
+  darkrtp.use:
+    description: Allows using /rtp on yourself.
+    default: true
+  darkrtp.others:
+    description: Allows teleporting other players.
+    default: op
+  darkrtp.reload:
+    description: Allows reloading the configuration.
+    default: op
+  darkrtp.bypass.cooldown:
+    description: Skips the RTP cooldown.
+    default: op
+  darkrtp.bypass.warmup:
+    description: Skips the RTP warmup.
+    default: op

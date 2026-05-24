@@ -1,0 +1,115 @@
+# =====================================================================
+#  DarkRTP - configurable random teleport for Paper 1.21.x
+#  Nothing here is hard-coded into the plugin: radii, centers, safety
+#  rules, cooldowns and messages are all driven by this file.
+# =====================================================================
+
+settings:
+  # How many random spots to test before giving up for one request.
+  max-attempts: 50
+
+  # Seconds the player must wait (and stand still) before being teleported.
+  # Set to 0 for an instant teleport.
+  warmup-seconds: 3
+  cancel-on-move: true
+  cancel-on-damage: true
+
+  # Seconds before a player may RTP again. The cooldown only starts after a
+  # *successful* teleport. Set to 0 to disable.
+  cooldown-seconds: 60
+
+  # Cosmetic feedback played on arrival.
+  effects:
+    sound: true
+    particles: true
+
+# ---------------------------------------------------------------------
+# Default radius/center rules. A world inherits these unless it overrides
+# them under "worlds:" below.
+# ---------------------------------------------------------------------
+defaults:
+  enabled: true
+
+  # Random spot is chosen in the ring between min-radius and max-radius
+  # (in blocks) around the chosen center.
+  min-radius: 100
+  max-radius: 5000
+
+  center:
+    # world-spawn  -> the world's spawn point
+    # world-border -> the center of the world border
+    # fixed        -> the x/z coordinates below
+    mode: world-spawn
+    x: 0
+    z: 0
+
+  # Never pick a point outside the world border.
+  respect-world-border: true
+
+# ---------------------------------------------------------------------
+# Per-world overrides. Use the real world folder name as the key.
+# Any field left out here falls back to "defaults" above.
+# Worlds not listed here simply use the defaults.
+# ---------------------------------------------------------------------
+worlds:
+  world:
+    enabled: true
+    min-radius: 250
+    max-radius: 10000
+    center:
+      mode: world-spawn
+
+  world_nether:
+    enabled: true
+    min-radius: 100
+    max-radius: 2000
+
+  world_the_end:
+    enabled: false
+
+# ---------------------------------------------------------------------
+# Safety rules used when validating a candidate landing spot.
+# ---------------------------------------------------------------------
+safety:
+  # The block a player would stand ON may not be any of these.
+  unsafe-blocks:
+    - LAVA
+    - FIRE
+    - CAMPFIRE
+    - SOUL_CAMPFIRE
+    - CACTUS
+    - MAGMA_BLOCK
+    - SWEET_BERRY_BUSH
+    - WITHER_ROSE
+    - POWDER_SNOW
+
+  # Allow landing on/in water (otherwise water counts as unsafe).
+  allow-water-landing: false
+
+  # Do not place players on top of the nether bedrock ceiling.
+  avoid-nether-roof: true
+
+  # Lowest Y a player may be teleported to (guards against the void).
+  min-y: -64
+
+# ---------------------------------------------------------------------
+# Messages. MiniMessage formatting is supported (https://docs.advntr.dev/minimessage).
+# Placeholders are written like <name>. Set any message to "" to silence it.
+# ---------------------------------------------------------------------
+messages:
+  prefix: "<dark_gray>[<gradient:#8a2be2:#c77dff>DarkRTP</gradient><dark_gray>] <reset>"
+  searching: "<gray>Searching for a safe location..."
+  warmup: "<gray>Teleporting in <yellow><seconds></yellow> seconds. Don't move."
+  success: "<green>Whoosh! Teleported to <white><x>, <y>, <z></white> in <white><world></white>."
+  teleported-other: "<green>Teleported <white><player></white> to a random location."
+  no-location: "<red>Couldn't find a safe spot. Please try again."
+  cooldown: "<red>You must wait <yellow><seconds></yellow>s before using RTP again."
+  cancelled-move: "<red>Teleport cancelled because you moved."
+  cancelled-damage: "<red>Teleport cancelled because you took damage."
+  already-teleporting: "<red>You already have a teleport in progress."
+  world-disabled: "<red>RTP is disabled in <white><world></white>."
+  no-permission: "<red>You don't have permission to do that."
+  players-only: "<red>Only players can teleport themselves. Use /rtp <player>."
+  player-not-found: "<red>Player <white><player></white> is not online."
+  reloaded: "<green>Configuration reloaded."
+  help: "<gray>/rtp <gray>- random teleport · <gray>/rtp <player> <gray>- teleport someone · <gray>/rtp reload"
